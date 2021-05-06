@@ -677,6 +677,9 @@ declare module 'binance-api-node' {
     reduceOnly?: string
     activationPrice?: string
     callbackRate?: string
+    positionSide?: "SHORT" | "LONG"
+    closePosition?: "true" | "false"
+    workingType?: "MARK_PRICE" | "CONTRACT_PRICE"
   }
 
   export interface NewOcoOrder {
@@ -756,6 +759,7 @@ declare module 'binance-api-node' {
     | 'STOP_MARKET'
     | 'TAKE_PROFIT_MARKET'
     | 'TRAILING_STOP_MARKET'
+    | 'TAKE_PROFIT'
 
   export type ListOrderStatus = 'EXECUTING' | 'ALL_DONE' | 'REJECT'
 
