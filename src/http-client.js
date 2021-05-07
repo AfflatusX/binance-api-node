@@ -228,7 +228,9 @@ const order = (privCall, payload = {}, url) => {
 
   const requires = ['symbol', 'side']
 
-  if (!(newPayload.type === 'MARKET' && newPayload.quoteOrderQty)) {
+  if (!(newPayload.type === 'MARKET' && newPayload.quoteOrderQty) && 
+      !(newPayload.type === 'TAKE_PROFIT_MARKET' && newPayload.closePosition === 'true') &&
+      !(newPayload.type === 'STOP_MARKET' && newPayload.closePosition === 'true')) {
     requires.push('quantity')
   }
 
