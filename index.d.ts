@@ -815,6 +815,8 @@ declare module 'binance-api-node' {
     quotePrecision: number
     status: string
     symbol: string
+    pricePrecision: number
+    quantityPrecision: number
   }
 
   export interface ExchangeInfo {
