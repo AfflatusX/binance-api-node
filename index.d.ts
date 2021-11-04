@@ -370,6 +370,8 @@ declare module 'binance-api-node' {
     book(options: { symbol: string; limit?: number }): Promise<OrderBook>
     exchangeInfo(): Promise<ExchangeInfo>
     lendingAccount(options?: { useServerTime: boolean }): Promise<LendingAccount>
+    lendingFlexibleProductList(): Promise<LendingFlexibleProduct[]>
+    lendingFlexiblePosition(options: {asset: string}): Promise<LendingFlexiblePosition[]>
     fundingWallet(options?: { asset?: string, needBtcValuation?: booleanString, useServerTime?: boolean }): Promise<FundingWallet[]>
     order(options: NewOrderSpot): Promise<Order>
     orderTest(options: NewOrderSpot): Promise<Order>
