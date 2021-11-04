@@ -114,6 +114,21 @@ declare module 'binance-api-node' {
     totalFlexibleInUSDT: string
   }
 
+  export interface LendingFlexibleProduct {
+    asset: string,
+    productId: string,
+  }
+
+  export interface LendingFlexiblePosition {
+    asset: string,
+    freeAmount: string,
+    freezeAmount: string,
+    lockedAmount: string,
+    productId: string,
+    productName: string,
+    totalAmount: string,
+  }
+
   export interface FundingWallet {
     asset: string
     free: string    // available balance
