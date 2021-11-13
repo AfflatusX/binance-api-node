@@ -229,6 +229,14 @@ const futuresTickerTransform = m => ({
   totalTrades: m.n,
 })
 
+const futuresMarkPriceTransform = m => ({
+  time: m.E,
+  symbol: m.s,
+  markPrice: m.p,
+  lastFundingRate: m.r,
+  nextFundingTime: m.T,
+})
+
 const ticker = (payload, cb, transform = true, variator) => {
   const cache = (Array.isArray(payload) ? payload : [payload]).map(symbol => {
     const w = openWebSocket(
@@ -253,6 +261,23 @@ const ticker = (payload, cb, transform = true, variator) => {
 
   return options =>
     cache.forEach(w => w.close(1000, 'Close handle was called', { keepClosed: true, ...options }))
+}
+
+const allMarkPrice = (cb, transform = true) => {
+  const w = new openWebSocket(
+    `${endpoints.futures}/!markPrice@arr@1s`,
+  )
+
+  w.onmessage = msg => {
+    const arr = JSON.parse(msg.data)
+    cb(
+      transform
+        ? arr.map(m => futuresMarkPriceTransform(m))
+        : arr,
+    )
+  }
+
+  return options => w.close(1000, 'Close handle was called', { keepClosed: true, ...options })
 }
 
 const allTickers = (cb, transform = true, variator) => {
@@ -719,6 +744,7 @@ export default opts => {
       candles(payload, interval, cb, transform, 'futures'),
     futuresTicker: (payload, cb, transform) => ticker(payload, cb, transform, 'futures'),
     futuresAllTickers: (cb, transform) => allTickers(cb, transform, 'futures'),
+    futuresAllMarkPrice: (cb, transform) => allMarkPrice(cb, transform),
     futuresAggTrades: (payload, cb, transform) => aggTrades(payload, cb, transform, 'futures'),
     futuresLiquidations,
     futuresAllLiquidations,
